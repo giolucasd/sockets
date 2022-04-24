@@ -14,20 +14,9 @@
 
 #include <arpa/inet.h>
 
-#define PORT "3490" // The port client will be connecting to
+#include "utils.h"
 
 #define MAXDATASIZE 4096 // Max number of bytes we can get at once
-
-// Get sockaddr, IPv4 or IPv6:
-void *get_in_addr(struct sockaddr *sock_addr)
-{
-    if (sock_addr->sa_family == AF_INET)
-    {
-        return &(((struct sockaddr_in *)sock_addr)->sin_addr);
-    }
-
-    return &(((struct sockaddr_in6 *)sock_addr)->sin6_addr);
-}
 
 int main(int argc, char *argv[])
 {
@@ -44,7 +33,7 @@ int main(int argc, char *argv[])
     hints.ai_socktype = SOCK_STREAM;
 
     int response_status;
-    if ((response_status = getaddrinfo(argv[1], PORT, &hints, &servinfo)) != 0)
+    if ((response_status = getaddrinfo(argv[1], SERVER_PORT, &hints, &servinfo)) != 0)
     {
         fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(response_status));
         return 1;
