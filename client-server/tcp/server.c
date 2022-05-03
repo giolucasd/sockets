@@ -16,8 +16,10 @@
 #include <signal.h>
 
 #include "utils.h"
+#include "../backend.h"
 
-#define BACKLOG 10 // How many pending connections queue will hold
+#define BACKLOG 10      // How many pending connections queue will hold
+#define MAXDATASIZE 256 // Max number of bytes we can get at once
 
 void sigchld_handler(int sig)
 {
@@ -38,7 +40,7 @@ int main(void)
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_flags = AI_PASSIVE; // use my IP
-    
+
     int response_status;
     if ((response_status = getaddrinfo(NULL, SERVER_PORT, &hints, &servinfo)) != 0)
     {
@@ -124,8 +126,23 @@ int main(void)
         if (!fork())
         {                  // This is the child process
             close(sockfd); // Child doesn't need the listener
-            if (send(new_sockfd, "Hello, world!", 13, 0) == -1)
+
+            int numbytes;
+            char request_buffer[MAXDATASIZE];
+            if ((numbytes = recv(new_sockfd, request_buffer, MAXDATASIZE - 1, 0)) == -1)
+            {
+                perror("recv");
+                exit(1);
+            }
+            request_buffer[numbytes] = '\0';
+
+            // Process request generating a response
+            response res = operation_router(request_buffer);
+
+            if (send(new_sockfd, res.response_data, res.response_size, 0) == -1)
                 perror("send");
+
+            free_response(res); // All done with this structure
             close(new_sockfd);
             exit(0);
         }
