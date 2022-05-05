@@ -15,6 +15,7 @@
 #include <arpa/inet.h>
 
 #include "utils.h"
+#include "../interface.h"
 
 #define MAXDATASIZE 4096 // Max number of bytes we can get at once
 
@@ -75,6 +76,14 @@ int main(int argc, char *argv[])
 
     freeaddrinfo(servinfo); // All done with this structure
 
+    request req = interface_handler();
+
+    if (send(sockfd, req.request_data, req.request_size, 0) == -1)
+    {
+        perror("send");
+        exit(1);
+    }
+
     int numbytes;
     char response_buffer[MAXDATASIZE];
     if ((numbytes = recv(sockfd, response_buffer, MAXDATASIZE - 1, 0)) == -1)
@@ -85,7 +94,7 @@ int main(int argc, char *argv[])
 
     response_buffer[numbytes] = '\0';
 
-    printf("client: received '%s'\n", response_buffer);
+    free_request(req);  // All done with this structure
 
     close(sockfd);
 
