@@ -16,6 +16,7 @@
 
 #include "utils.h"
 #include "../interface.h"
+#include "../renderer.h"
 
 #define MAXDATASIZE 4096 // Max number of bytes we can get at once
 
@@ -94,6 +95,8 @@ int main(int argc, char *argv[])
 
     response_buffer[numbytes] = '\0';
 
+    render_response(req.request_data[0], response_buffer);
+    
     free_request(req);  // All done with this structure
 
     close(sockfd);
