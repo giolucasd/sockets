@@ -28,7 +28,25 @@ typedef struct
     char date[5];
 } movie;
 
-// TODO int init_db();
+int init_db(){
+    FILE *datafile;
+
+    datafile = fopen(FILENAME, "r");
+    if (datafile == NULL)
+    {
+        fprintf(stderr, "table does not exist yet, creating database...\n");
+        datafile = fopen(FILENAME, "w+");
+        if (datafile == NULL)
+        {
+            fprintf(stderr, "failed creating database\n");
+            return 1;
+        }
+        fprintf(stderr, "database created!\n");
+        fclose(datafile);
+    }
+
+    return 0;
+}
 
 int create(movie new_record)
 {
@@ -222,6 +240,7 @@ int add_gender_to_record(u_int32_t id, char *genre)
             {
                 // Append genre
                 response = 0;
+                // FIX this shit not appending correctly
                 strcat(record.genres, ";");
                 strcat(record.genres, genre);
             }

@@ -34,6 +34,11 @@ void sigchld_handler(int sig)
 
 int main(void)
 {
+    // Initialize database
+    if (init_db())
+        return 1;
+
+    // Handle server comunication
     struct addrinfo hints, *servinfo, *p;
 
     memset(&hints, 0, sizeof hints);
