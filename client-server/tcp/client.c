@@ -14,7 +14,7 @@
 
 #include <arpa/inet.h>
 
-#include "utils.h"
+#include "../utils.h"
 #include "../interface.h"
 #include "../renderer.h"
 
