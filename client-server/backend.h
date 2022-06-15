@@ -175,56 +175,55 @@ response operation_router(char *request_data)
 // Return response struct, the caller should free it after using
 {
     response res;
-    int response_size;
 
     char operation = request_data[0];
     switch (operation)
     {
     case 1:
-        response_size = 1 * sizeof(char);
-        res.response_data = (char *)malloc(response_size);
+        res.response_size = 1 * sizeof(char);
+        res.response_data = (char *)malloc(res.response_size);
         operation1(res.response_data, request_data);
         break;
 
     case 2:
-        response_size = 1 * sizeof(char);
-        res.response_data = (char *)malloc(response_size);
+        res.response_size = 1 * sizeof(char);
+        res.response_data = (char *)malloc(res.response_size);
         operation2(res.response_data, request_data);
         break;
 
     case 3:
-        response_size = (2 + 74 * DB_SIZE) * sizeof(char);
-        res.response_data = (char *)malloc(response_size);
+        res.response_size = (2 + 74 * DB_SIZE) * sizeof(char);
+        res.response_data = (char *)malloc(res.response_size);
         operation3(res.response_data);
         break;
 
     case 4:
-        response_size = (2 + 125 * DB_SIZE) * sizeof(char);
-        res.response_data = (char *)malloc(response_size);
+        res.response_size = (2 + 125 * DB_SIZE) * sizeof(char);
+        res.response_data = (char *)malloc(res.response_size);
         operation4(res.response_data, request_data);
         break;
 
     case 5:
-        response_size = (2 + 249 * DB_SIZE) * sizeof(char);
-        res.response_data = (char *)malloc(response_size);
+        res.response_size = (2 + 249 * DB_SIZE) * sizeof(char);
+        res.response_data = (char *)malloc(res.response_size);
         operation5(res.response_data);
         break;
 
     case 6:
-        response_size = 250 * sizeof(char);
-        res.response_data = (char *)malloc(response_size);
+        res.response_size = 250 * sizeof(char);
+        res.response_data = (char *)malloc(res.response_size);
         operation6(res.response_data, request_data);
         break;
 
     case 7:
-        response_size = 1 * sizeof(char);
-        res.response_data = (char *)malloc(response_size);
+        res.response_size = 1 * sizeof(char);
+        res.response_data = (char *)malloc(res.response_size);
         operation7(res.response_data, request_data);
         break;
 
     default:
-        response_size = 1 * sizeof(char);
-        res.response_data = (char *)malloc(response_size);
+        res.response_size = 1 * sizeof(char);
+        res.response_data = (char *)malloc(res.response_size);
         res.response_data[0] = 1;
     }
 

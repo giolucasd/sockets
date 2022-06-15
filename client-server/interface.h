@@ -108,9 +108,7 @@ request interface_handler()
 // Return request struct, the caller should free it after using
 {
     request req;
-    int request_size;
-
-    get_operation:
+    char operation;
 
     printf("Operações disponíveis:\n");
     printf("\t* 1 - cadastrar um novo filme;\n");
@@ -121,56 +119,57 @@ request interface_handler()
     printf("\t* 6 - listar todas as informações de um filme;\n");
     printf("\t* 7 - remover um filme.\n");
     printf("Insira o código da operação desejada:\n");
+    
+    get_operation:
 
-    char operation;
     operation = getchar();
 
     switch (operation)
     {
     case '1':
-        request_size = 250 * sizeof(char);
-        req.request_data = (char *)malloc(request_size);
+        req.request_size = 250 * sizeof(char);
+        req.request_data = (char *)malloc(req.request_size);
         operation1(req.request_data);
         break;
 
     case '2':
-        request_size = 20 * sizeof(char);
-        req.request_data = (char *)malloc(request_size);
+        req.request_size = 20 * sizeof(char);
+        req.request_data = (char *)malloc(req.request_size);
         operation2(req.request_data);
         break;
 
     case '3':
-        request_size = 1 * sizeof(char);
-        req.request_data = (char *)malloc(request_size);
+        req.request_size = 1 * sizeof(char);
+        req.request_data = (char *)malloc(req.request_size);
         operation3(req.request_data);
         break;
 
     case '4':
-        request_size = 16 * sizeof(char);
-        req.request_data = (char *)malloc(request_size);
+        req.request_size = 16 * sizeof(char);
+        req.request_data = (char *)malloc(req.request_size);
         operation4(req.request_data);
         break;
 
     case '5':
-        request_size = 1 * sizeof(char);
-        req.request_data = (char *)malloc(request_size);
+        req.request_size = 1 * sizeof(char);
+        req.request_data = (char *)malloc(req.request_size);
         operation5(req.request_data);
         break;
 
     case '6':
-        request_size = 5 * sizeof(char);
-        req.request_data = (char *)malloc(request_size);
+        req.request_size = 5 * sizeof(char);
+        req.request_data = (char *)malloc(req.request_size);
         operation6(req.request_data);
         break;
 
     case '7':
-        request_size = 5 * sizeof(char);
-        req.request_data = (char *)malloc(request_size);
+        req.request_size = 5 * sizeof(char);
+        req.request_data = (char *)malloc(req.request_size);
         operation7(req.request_data);
         break;
 
     default:
-        printf("Operação inválida!\n");
+        printf("Insira uma operação válida!\n");
         goto get_operation;
     }
 
