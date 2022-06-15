@@ -158,6 +158,8 @@ void render_response(char operation, char *response_data)
 {
     int response_size;
 
+    printf("\nResposta:\n\n");
+
     switch (operation)
     {
     case 1:
@@ -198,4 +200,6 @@ void render_response(char operation, char *response_data)
     default:
         printf("Operação inválida!\n");
     }
+
+    printf("\n\n********************************************************************************************\n\n");
 }
