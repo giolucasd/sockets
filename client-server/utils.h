@@ -5,7 +5,7 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 
-#define SERVER_PORT "3490" // The server or listener port
+#define SERVER_PORT "3490" // The server port
 
 // get sockaddr, IPv4 or IPv6:
 void *get_in_addr(struct sockaddr *sock_addr)
